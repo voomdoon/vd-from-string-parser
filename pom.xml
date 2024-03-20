@@ -21,15 +21,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- - - - - - internal voomdoon test dependencies - - - - - -->
-
-		<!-- + + + + + external test dependencies + + + + + -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.14.0</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- - - - - - external test dependencies - - - - - -->
 		<!-- - - - - - - - - - - test dependencies - - - - - - - - - - -->
 	</dependencies>
 </project>
