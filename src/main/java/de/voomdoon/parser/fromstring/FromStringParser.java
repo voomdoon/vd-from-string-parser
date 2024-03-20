@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-//XXX move somewhere?
-
 /**
  * DOCME add JavaDoc for
  *
