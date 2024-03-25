@@ -1,9 +1,12 @@
 package de.voomdoon.parser.fromstring;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.URI;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.regex.Pattern;
 
@@ -111,5 +114,43 @@ class FromStringParserTest extends TestBase {
 		BigInteger actual = parser.parse(BigInteger.class, "123");
 
 		assertThat(actual).isEqualTo(BigInteger.valueOf(123));
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_URI() throws Exception {
+		logTestStart();
+
+		URI actual = parser.parse(URI.class, "http://www.example.com");
+
+		assertThat(actual).isEqualTo(new URI("http://www.example.com"));
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_URL() throws Exception {
+		logTestStart();
+
+		URL actual = parser.parse(URL.class, "http://www.example.com");
+
+		assertThat(actual).isEqualTo(new URL("http://www.example.com"));
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_URL_ParseException() throws Exception {
+		logTestStart();
+
+		ParseException actual = assertThrows(ParseException.class, () -> parser.parse(URL.class, "localhost:123"));
+
+		logger.debug("expected error: " + actual.getMessage());
+
+		assertThat(actual).hasMessageContaining("localhost:123");
 	}
 }

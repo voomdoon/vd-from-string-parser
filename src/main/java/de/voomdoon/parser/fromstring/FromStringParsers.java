@@ -2,6 +2,9 @@ package de.voomdoon.parser.fromstring;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,6 +58,8 @@ public class FromStringParsers {
 		addMathParsers();
 
 		parsers.put(Pattern.class, Pattern::compile);
+
+		addNetParsers();
 
 		addClassParser();
 	}
@@ -121,6 +126,21 @@ public class FromStringParsers {
 	private void addMathParsers() {
 		parsers.put(BigInteger.class, BigInteger::new);
 		parsers.put(BigDecimal.class, BigDecimal::new);
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	private void addNetParsers() {
+		parsers.put(URL.class, string -> {
+			try {
+				return new URL(string);
+			} catch (MalformedURLException e) {
+				throw new ParseException("Failed to parse URL from '" + string + "': " + e.getMessage(), -1);
+			}
+		});
+
+		parsers.put(URI.class, URI::create);
 	}
 
 	/**
