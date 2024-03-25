@@ -24,7 +24,7 @@ class FromStringParserTest extends TestBase {
 	/**
 	 * @since 0.1.0
 	 */
-	private FromStringParser parser = new FromStringParser();
+	private FromStringParsers parser = new FromStringParsers();
 
 	/**
 	 * @since 0.1.0

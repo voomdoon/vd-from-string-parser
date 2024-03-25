@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  *
  * @since 0.1.0
  */
-public class FromStringParser {
+public class FromStringParsers {
 
 	/**
 	 * DOCME add JavaDoc for ObjectParser
@@ -24,7 +24,7 @@ public class FromStringParser {
 	 *
 	 * @since 0.1.0
 	 */
-	public static interface Parser<T> {
+	public static interface FromStringParser<T> {
 
 		/**
 		 * DOCME add JavaDoc for method parse
@@ -41,12 +41,12 @@ public class FromStringParser {
 	/**
 	 * @since 0.1.0
 	 */
-	private Map<Class<?>, Parser<?>> parsers = new HashMap<>();
+	private Map<Class<?>, FromStringParser<?>> parsers = new HashMap<>();
 
 	/**
 	 * @since 0.1.0
 	 */
-	public FromStringParser() {
+	public FromStringParsers() {
 		addNumberParsers();
 
 		parsers.put(boolean.class, Boolean::parseBoolean);
@@ -76,7 +76,7 @@ public class FromStringParser {
 			return parseEnum(clazz, string);
 		}
 
-		Parser<?> parser = parsers.get(clazz);
+		FromStringParser<?> parser = parsers.get(clazz);
 
 		if (parser == null) {
 			throw new UnsupportedOperationException("No parser for " + clazz + " registered!");
