@@ -43,12 +43,17 @@ public class FromStringParsers {
 	/**
 	 * @since 0.1.0
 	 */
+	public static final FromStringParsers DEFAULT = new FromStringParsers();
+
+	/**
+	 * @since 0.1.0
+	 */
 	private Map<Class<?>, FromStringParser<?>> parsers = new HashMap<>();
 
 	/**
 	 * @since 0.1.0
 	 */
-	public FromStringParsers() {
+	private FromStringParsers() {
 		addNumberParsers();
 
 		parsers.put(boolean.class, Boolean::parseBoolean);
