@@ -8,7 +8,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.regex.Pattern;
 
 /**
@@ -91,20 +90,6 @@ public class FromStringParsers {
 		T result = (T) parser.parse(string);
 
 		return result;
-	}
-
-	/**
-	 * DOCME add JavaDoc for method registerParser
-	 * 
-	 * @param <T>
-	 * @param clazz
-	 * @param parser
-	 * @since 0.1.0
-	 */
-	public <T> void registerParser(Class<T> clazz, Function<String, T> parser) {
-		// TESTME registerParser
-		// TODO implement registerParser
-		throw new UnsupportedOperationException("Method 'registerParser' not implemented yet");
 	}
 
 	/**
