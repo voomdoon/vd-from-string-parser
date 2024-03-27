@@ -22,7 +22,7 @@ import de.voomdoon.testing.tests.TestBase;
  *
  * @since 0.1.0
  */
-class FromStringParserTest extends TestBase {
+class FromStringParsersTest extends TestBase {
 
 	/**
 	 * @since 0.1.0
