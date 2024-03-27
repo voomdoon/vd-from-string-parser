@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 import org.junit.jupiter.api.Test;
 
 import de.voomdoon.logging.LogLevel;
+import de.voomdoon.parser.fromstring.test.TestObject;
 import de.voomdoon.testing.tests.TestBase;
 
 /**
@@ -90,6 +91,18 @@ class FromStringParsersTest extends TestBase {
 		Pattern actual = parsers.parse(Pattern.class, "abc.*");
 
 		assertThat(actual).extracting(Pattern::pattern).isEqualTo("abc.*");
+	}
+
+	/**
+	 * @since 0.1.0
+	 */
+	@Test
+	void test_initialization() throws Exception {
+		logTestStart();
+
+		TestObject actual = parsers.parse(TestObject.class, "abc");
+
+		assertThat(actual).extracting(TestObject::getString).isEqualTo("ABC");
 	}
 
 	/**

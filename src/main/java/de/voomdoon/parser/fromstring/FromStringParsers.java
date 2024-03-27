@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import de.voomdoon.parser.fromstring.ParsersInitializer.InvalidParserException;
+
 /**
  * DOCME add JavaDoc for
  *
@@ -18,27 +20,6 @@ import java.util.regex.Pattern;
  * @since 0.1.0
  */
 public class FromStringParsers {
-
-	/**
-	 * DOCME add JavaDoc for ObjectParser
-	 *
-	 * @author André Schulz
-	 *
-	 * @since 0.1.0
-	 */
-	public static interface FromStringParser<T> {
-
-		/**
-		 * DOCME add JavaDoc for method parse
-		 * 
-		 * @param <T>
-		 * @param string
-		 * @return
-		 * @throws ParseException
-		 * @since 0.1.0
-		 */
-		T parse(String string) throws ParseException;
-	}
 
 	/**
 	 * @since 0.1.0
@@ -66,6 +47,13 @@ public class FromStringParsers {
 		addNetParsers();
 
 		addClassParser();
+
+		try {
+			new ParsersInitializer().getParsers().forEach((clazz, parser) -> parsers.put(clazz, parser));
+		} catch (InvalidParserException e) {
+			// TODO implement error handling
+			throw new RuntimeException("Error at 'FromStringParsers': " + e.getMessage(), e);
+		}
 	}
 
 	/**
