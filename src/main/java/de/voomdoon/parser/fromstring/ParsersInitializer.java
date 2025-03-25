@@ -59,8 +59,9 @@ class ParsersInitializer {
 	 * @since 0.1.0
 	 */
 	Map<Class<?>, FromStringParser<?>> getParsers(ClassLoader classLoader) throws InvalidParserException {
-		@SuppressWarnings("rawtypes")
-		ServiceLoader<FromStringParser> loaders = ServiceLoader.load(FromStringParser.class, classLoader);
+		@SuppressWarnings("unchecked")
+		ServiceLoader<FromStringParser<?>> loaders = (ServiceLoader<FromStringParser<?>>) (ServiceLoader<?>) ServiceLoader
+				.load(FromStringParser.class, classLoader);
 
 		Map<Class<?>, FromStringParser<?>> result = new HashMap<>();
 
