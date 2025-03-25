@@ -57,26 +57,31 @@ public class FromStringParsers {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method parse
+	 * Parses a string value into an object of the specified type.
 	 * 
 	 * @param <T>
-	 * @param clazz
+	 *            The result type.
 	 * @param string
-	 * @return
+	 *            the string to parse
+	 * @param targetType
+	 *            the target class to parse the string into
+	 * @return the parsed object
 	 * @throws ParseException
+	 *             if parsing fails
 	 * @since 0.1.0
 	 */
-	public <T> T parse(Class<T> clazz, String string) throws ParseException {
-		if (clazz.equals(String.class)) {
+	public <T> T parse(String string, Class<T> targetType) throws ParseException {
+		if (targetType.equals(String.class)) {
 			return (T) string.toString();
-		} else if (clazz.isEnum()) {
-			return parseEnum(clazz, string);
+		} else if (targetType.isEnum()) {
+			return parseEnum(string, targetType);
 		}
 
-		FromStringParser<?> parser = parsers.get(clazz);
+		FromStringParser<?> parser = parsers.get(targetType);
 
 		if (parser == null) {
-			throw new UnsupportedOperationException("No parser for " + clazz + " registered!");
+			throw new UnsupportedOperationException(
+					"No parser registered for " + targetType.getName() + ". Input was: '" + string + "'");
 		}
 
 		@SuppressWarnings("unchecked")
@@ -138,15 +143,16 @@ public class FromStringParsers {
 	/**
 	 * DOCME add JavaDoc for method parseEnum
 	 * 
-	 * @param <T>
-	 * @param clazz
 	 * @param string
+	 * @param targetType
+	 * 
+	 * @param <T>
 	 * @return
 	 * @throws ParseException
 	 * @since 0.1.0
 	 */
-	private <T> T parseEnum(Class<T> clazz, String string) throws ParseException {
-		for (T element : clazz.getEnumConstants()) {
+	private <T> T parseEnum(String string, Class<T> targetType) throws ParseException {
+		for (T element : targetType.getEnumConstants()) {
 			if (element.toString().equals(string)) {
 				return element;
 			}
@@ -154,6 +160,6 @@ public class FromStringParsers {
 
 		// TODO respect name
 
-		throw new ParseException("No enum constant " + clazz + "." + string, -1);
+		throw new ParseException("No enum constant " + targetType + "." + string, -1);
 	}
 }

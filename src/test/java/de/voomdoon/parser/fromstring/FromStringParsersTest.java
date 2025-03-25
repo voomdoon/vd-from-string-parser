@@ -37,7 +37,7 @@ class FromStringParsersTest extends TestBase {
 	void test_default_enum() throws Exception {
 		logTestStart();
 
-		LogLevel actual = parsers.parse(LogLevel.class, "INFO");
+		LogLevel actual = parsers.parse("INFO", LogLevel.class);
 
 		assertThat(actual).isEqualTo(LogLevel.INFO);
 	}
@@ -50,7 +50,7 @@ class FromStringParsersTest extends TestBase {
 	void test_default_Number_Integer() throws ParseException {
 		logTestStart();
 
-		Integer actual = parsers.parse(Integer.class, "123");
+		Integer actual = parsers.parse("123", Integer.class);
 
 		assertThat(actual).isEqualTo(Integer.valueOf(123));
 	}
@@ -63,7 +63,7 @@ class FromStringParsersTest extends TestBase {
 	void test_default_Number_long() throws ParseException {
 		logTestStart();
 
-		long actual = parsers.parse(long.class, "123");
+		long actual = parsers.parse("123", long.class);
 
 		assertThat(actual).isEqualTo(123L);
 	}
@@ -76,7 +76,7 @@ class FromStringParsersTest extends TestBase {
 	void test_default_Number_Long() throws ParseException {
 		logTestStart();
 
-		Long actual = parsers.parse(Long.class, "123");
+		Long actual = parsers.parse("123", Long.class);
 
 		assertThat(actual).isEqualTo(Long.valueOf(123));
 	}
@@ -88,7 +88,7 @@ class FromStringParsersTest extends TestBase {
 	void test_default_Pattern() throws Exception {
 		logTestStart();
 
-		Pattern actual = parsers.parse(Pattern.class, "abc.*");
+		Pattern actual = parsers.parse("abc.*", Pattern.class);
 
 		assertThat(actual).extracting(Pattern::pattern).isEqualTo("abc.*");
 	}
@@ -100,7 +100,7 @@ class FromStringParsersTest extends TestBase {
 	void test_initialization() throws Exception {
 		logTestStart();
 
-		TestObject actual = parsers.parse(TestObject.class, "abc");
+		TestObject actual = parsers.parse("abc", TestObject.class);
 
 		assertThat(actual).extracting(TestObject::getString).isEqualTo("ABC");
 	}
@@ -112,7 +112,7 @@ class FromStringParsersTest extends TestBase {
 	void test_Math_BigDecimal() throws Exception {
 		logTestStart();
 
-		BigDecimal actual = parsers.parse(BigDecimal.class, "123.456");
+		BigDecimal actual = parsers.parse("123.456", BigDecimal.class);
 
 		assertThat(actual).isEqualTo(BigDecimal.valueOf(123456, 3));
 	}
@@ -124,7 +124,7 @@ class FromStringParsersTest extends TestBase {
 	void test_Math_BigInteger() throws Exception {
 		logTestStart();
 
-		BigInteger actual = parsers.parse(BigInteger.class, "123");
+		BigInteger actual = parsers.parse("123", BigInteger.class);
 
 		assertThat(actual).isEqualTo(BigInteger.valueOf(123));
 	}
@@ -136,7 +136,7 @@ class FromStringParsersTest extends TestBase {
 	void test_URI() throws Exception {
 		logTestStart();
 
-		URI actual = parsers.parse(URI.class, "http://www.example.com");
+		URI actual = parsers.parse("http://www.example.com", URI.class);
 
 		assertThat(actual).isEqualTo(new URI("http://www.example.com"));
 	}
@@ -148,7 +148,7 @@ class FromStringParsersTest extends TestBase {
 	void test_URL() throws Exception {
 		logTestStart();
 
-		URL actual = parsers.parse(URL.class, "http://www.example.com");
+		URL actual = parsers.parse("http://www.example.com", URL.class);
 
 		assertThat(actual).isEqualTo(new URL("http://www.example.com"));
 	}
@@ -160,7 +160,7 @@ class FromStringParsersTest extends TestBase {
 	void test_URL_ParseException() throws Exception {
 		logTestStart();
 
-		ParseException actual = assertThrows(ParseException.class, () -> parsers.parse(URL.class, "localhost:123"));
+		ParseException actual = assertThrows(ParseException.class, () -> parsers.parse("localhost:123", URL.class));
 
 		logger.debug("expected error: " + actual.getMessage());
 
