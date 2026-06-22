@@ -5,7 +5,17 @@
 This library supports a variety of common types and can be extended with custom parsers using Java’s Service Provider Interface (SPI).
 
 This utility is used at [vd-from-properties-parser](https://github.com/voomdoon/vd-from-properties-parser) to support parsing objects from `Properties`.
+Parser modules such as [vd-awt-from-string-parsers](https://github.com/voomdoon/vd-awt-from-string-parsers) can add type-specific parsers through the SPI mechanism.
 
+## Installation
+
+```xml
+<dependency>
+	<groupId>de.voomdoon.parsing</groupId>
+	<artifactId>vd-from-string-parser</artifactId>
+	<version>0.2.0</version>
+</dependency>
+```
 
 ## Features
 
@@ -15,7 +25,7 @@ This utility is used at [vd-from-properties-parser](https://github.com/voomdoon/
   - `Pattern`, `Class`, `URL`, `URI`
   - Enums
 - Extensible via SPI (Service Provider Interface via `META-INF/services`)
-- Simple, consistent API
+- Simple API for parsing a `String` into a requested target type
 - Validates and initializes custom parsers at runtime
 
 ---
@@ -62,6 +72,8 @@ Register the parser using Java’s SPI mechanism:
    ```
 
 Custom parsers are discovered and loaded automatically.
+
+For a module that contributes additional parsers this way, see [vd-awt-from-string-parsers](https://github.com/voomdoon/vd-awt-from-string-parsers).
 
 ---
 
