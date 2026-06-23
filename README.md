@@ -1,5 +1,17 @@
 # vd-from-string-parser
 
+[![License](https://img.shields.io/github/license/voomdoon/vd-from-string-parser)](https://github.com/voomdoon/vd-from-string-parser/blob/main/LICENSE)
+[![Java](https://img.shields.io/badge/Java-21-blue)](https://adoptium.net/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=coverage)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=bugs)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=voomdoon_vd-from-string-parser&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=voomdoon_vd-from-string-parser)
+
 **Modular utility to parse Java objects from `String` values.**
 
 This library supports a variety of common types and can be extended with custom parsers using Java’s Service Provider Interface (SPI).
