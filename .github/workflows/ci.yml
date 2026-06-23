@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 #v7.0.0
+        with:
+          fetch-depth: 0
+
+      - name: Detect Java version from Maven POM
+        id: java
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          RAW=$(mvn -q -N -DforceStdout help:evaluate -Dexpression=maven.compiler.target 2>/dev/null \
+            | tr -d '\r' \
+            | awk 'NF{last=$0} END{print last}')
+
+          MAJOR="${RAW%%.*}"
+
+          if [[ ! "$MAJOR" =~ ^[0-9]+$ ]]; then
+            echo "Could not determine Java version from maven.compiler.target (got '$RAW')" >&2
+            exit 1
+          fi
+
+          echo "Detected Java version from maven.compiler.target: $MAJOR"
+          echo "version=$MAJOR" >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK
+        uses: actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287 # v5.3.0
+        with:
+          distribution: temurin
+          java-version: ${{ steps.java.outputs.version }}
+          cache: maven
+
+      - name: Maven Verify
+        run: mvn -B -Pci clean verify
+
+      - name: Cache SonarCloud packages
+        if: ${{ env.SONAR_TOKEN }}
+        uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: SonarCloud analysis (only when token available)
+        if: ${{ env.SONAR_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+        run: |
+          mvn -B -Pci \
+            org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.projectKey=voomdoon_vd-from-string-parser

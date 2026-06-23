@@ -1,0 +1,84 @@
+---
+name: CodeQL Advanced
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  schedule:
+    - cron: '31 18 * * 1'
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+      contents: read
+      actions: read
+      packages: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: actions
+            build-mode: none
+
+          - language: java-kotlin
+            build-mode: manual
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  #  v7.0.0
+
+      - name: Detect Java sources
+        id: detect
+        shell: bash
+        run: |
+          if git ls-files -- '**/*.java' | grep -q .; then
+            echo "has_java=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_java=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      #  Only needed for Java/Kotlin
+      - name: Set up JDK 21
+        if: >
+          matrix.language == 'java-kotlin' &&
+          steps.detect.outputs.has_java == 'true'
+        uses: actions/setup-java@ad2b38190b15e4d6bdf0c97fb4fca8412226d287  #  v5.3.0
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Initialize CodeQL
+        if: >
+          matrix.language != 'java-kotlin' ||
+          steps.detect.outputs.has_java == 'true'
+        uses: github/codeql-action/init@8aad20d150bbac5944a9f9d289da16a4b0d87c1e  #  v4.36.2
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      #  Manual build for Java/Kotlin so CodeQL can extract + compile with Java 21
+      - name: Build with Maven
+        if: >
+          matrix.language == 'java-kotlin' &&
+          steps.detect.outputs.has_java == 'true'
+        run: mvn -B -DskipTests package
+
+      - name: Perform CodeQL Analysis
+        if: >
+          matrix.language != 'java-kotlin' ||
+          steps.detect.outputs.has_java == 'true'
+        uses: github/codeql-action/analyze@8aad20d150bbac5944a9f9d289da16a4b0d87c1e  #  v4.36.2
+        with:
+          category: "/language:${{ matrix.language }}"
