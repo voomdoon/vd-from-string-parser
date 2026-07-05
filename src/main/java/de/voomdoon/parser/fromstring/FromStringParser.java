@@ -3,18 +3,21 @@ package de.voomdoon.parser.fromstring;
 import java.text.ParseException;
 
 /**
- * DOCME add JavaDoc for ObjectParser
+ * Parses a {@link String} into a value of type {@code T}.
  *
  * @author André Schulz
+ *
+ * @param <T>
+ *            result type
  *
  * @since 0.1.0
  */
 public interface FromStringParser<T> {
 
 	/**
-	 * DOCME add JavaDoc for method getResultClass
+	 * Returns the result type supported by this parser.
 	 * 
-	 * @return
+	 * @return result class
 	 * @since 0.1.0
 	 */
 	default Class<T> getResultClass() {
@@ -23,12 +26,13 @@ public interface FromStringParser<T> {
 	}
 
 	/**
-	 * DOCME add JavaDoc for method parse
+	 * Parses the supplied string.
 	 * 
-	 * @param <T>
 	 * @param string
-	 * @return
+	 *            {@link String} to parse
+	 * @return parsed value
 	 * @throws ParseException
+	 *             if the {@link String} cannot be parsed
 	 * @since 0.1.0
 	 */
 	T parse(String string) throws ParseException;

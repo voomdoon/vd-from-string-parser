@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import de.voomdoon.parser.fromstring.ParsersInitializer.InvalidParserException;
 
 /**
- * DOCME add JavaDoc for
+ * Registry of parsers for common Java types.
  *
  * @author André Schulz
  *
@@ -22,6 +22,8 @@ import de.voomdoon.parser.fromstring.ParsersInitializer.InvalidParserException;
 public class FromStringParsers {
 
 	/**
+	 * Default registry containing parsers for common Java types.
+	 *
 	 * @since 0.1.0
 	 */
 	public static final FromStringParsers DEFAULT = new FromStringParsers();
@@ -62,7 +64,7 @@ public class FromStringParsers {
 	 * @param <T>
 	 *            The result type.
 	 * @param string
-	 *            the string to parse
+	 *            the {@link String} to parse
 	 * @param targetType
 	 *            the target class to parse the string into
 	 * @return the parsed object
